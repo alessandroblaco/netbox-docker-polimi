@@ -1,6 +1,7 @@
 services:
   netbox: &netbox
-    image: docker.io/netboxcommunity/netbox:${VERSION-v4.4-3.4.1}
+    image: netbox:latest-plugins
+    pull_policy: never
     depends_on:
       - postgres
       - redis
@@ -17,6 +18,9 @@ services:
       - netbox-media-files:/opt/netbox/netbox/media:rw
       - netbox-reports-files:/opt/netbox/netbox/reports:rw
       - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+    build:
+      context: .
+      dockerfile: Dockerfile-Plugins
   netbox-worker:
     <<: *netbox
     depends_on:
@@ -31,6 +35,8 @@ services:
       start_period: 20s
       timeout: 3s
       interval: 15s
+    image: netbox:latest-plugins
+    pull_policy: never
 
   # postgres
   postgres:
