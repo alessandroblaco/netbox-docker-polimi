@@ -50,6 +50,7 @@ services:
     env_file: env/postgres.env
     volumes:
       - netbox-postgres-data:/var/lib/postgresql/data
+      - ./dump.sql:/docker-entrypoint-initdb.d/dummy_dump.sql
 
   # redis
   redis:

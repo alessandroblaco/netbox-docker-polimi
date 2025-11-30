@@ -1,3 +1,25 @@
+# Dump/restore
+
+## from remote to local
+
+In remote host:
+`pg_dump -U netbox -d netbox -h 127.0.0.1 > dump.sql`
+
+In docker host:
+
+- `docker compose down --volumes`
+- If still in use:
+  `docker container prune`
+- `docker compose up`
+
+## from local to remote
+
+From docker host
+`docker compose run postgres pg_dump -h postgres -U netbox netbox --clean > local_dump.sql`
+
+In remote host:
+`psql -U netbox -d netbox -h 127.0.0.1 < local_dump.sql`
+
 # netbox-docker
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/netbox-community/netbox-docker)][github-release]
